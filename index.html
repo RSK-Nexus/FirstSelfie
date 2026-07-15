@@ -972,6 +972,23 @@
 
 }
 
+
+
+wistia-player::part(control-bar){
+    display:none !important;
+}
+
+wistia-player::part(controls){
+    display:none !important;
+}
+
+wistia-player::part(bottom-controls){
+    display:none !important;
+}
+
+wistia-player::part(top-controls){
+    display:none !important;
+}
     </style>
 
     <!-- Meta Pixel Code -->
@@ -1568,7 +1585,10 @@ wistia-player[media-id='2ibxoweynd']:not(:defined) {
 
 <wistia-player
     media-id="gc1lq9pd13"
-    aspect="1.7777777777777777">
+    aspect="1.7777777777777777"
+    controls="false"
+    playbar="false"
+    settings="false">
 </wistia-player>
 
   </div>
@@ -1611,14 +1631,25 @@ wistia-player[media-id='2ibxoweynd']:not(:defined) {
       <div class="thankyou-video">
 
           <script src="https://fast.wistia.com/player.js" async></script>
-          <script src="https://fast.wistia.com/embed/3u7a4y0ez9.js" 
-          async type="module"></script><style>wistia-player[media-id='3u7a4y0ez9']:not(:defined) 
-          { 
-            background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/3u7a4y0ez9/swatch'); 
-            display: block; filter: blur(5px); padding-top:56.25%; 
-            }
-            </style> 
-            <wistia-player media-id="3u7a4y0ez9" aspect="1.7777777777777777"></wistia-player>
+
+<script src="https://fast.wistia.com/embed/3u7a4y0ez9.js" async type="module"></script>
+
+<style>
+wistia-player[media-id='3u7a4y0ez9']:not(:defined){
+  background:center / contain no-repeat url('https://fast.wistia.com/embed/medias/3u7a4y0ez9/swatch');
+  display:block;
+  filter:blur(5px);
+  padding-top:56.25%;
+}
+</style>
+
+<wistia-player
+    media-id="3u7a4y0ez9"
+    aspect="1.7777777777777777"
+    controls="false"
+    playbar="false"
+    settings="false">
+</wistia-player>
       </div>
 
   </div>
