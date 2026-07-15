@@ -219,11 +219,7 @@
       .quote{font-size:clamp(19px,2.6vw,26px); color:var(--white); font-weight:600; max-width:1100px; margin:0 auto 40px; line-height:1.4;}
       .quote::before{content:'“'; color:var(--orange);}
       .quote::after{content:'”'; color:var(--orange);}
-      .player{
-        position:relative; aspect-ratio:16/9; background:var(--charcoal); border:2px solid rgba(255,107,0,0.5);
-        display:flex; align-items:center; justify-content:center; border-radius:12px; overflow:hidden;
-        box-shadow:0 20px 50px rgba(0,0,0,0.5);
-      }
+      
       .play-btn{
         position:relative; z-index:2; width:78px; height:78px; border-radius:50%;
         background:linear-gradient(135deg,var(--amber),var(--orange),var(--ember));
@@ -650,17 +646,7 @@
 
     }
 
-    .time-chip.booked{
-
-    background:#3a3a3a;
-
-    color:#8f8f8f;
-
-    border:1px solid #666;
-
-    cursor:not-allowed;
-
-}
+    
 
     .required{
         color:#ff4d4d;
@@ -961,20 +947,29 @@
 
 
 .wistia-video-container{
-    width: 100%;
-    max-width: 1080px;   /* Same width as your thumbnail */
-    margin: 0 auto;
-    border-radius: 20px;
-    overflow: hidden;
+
+    width:100%;
+    max-width:900px;
+
+    margin:0 auto;
+
+    aspect-ratio:16/9;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:0 20px 45px rgba(0,0,0,.35);
+
 }
 
 .wistia-video-container wistia-player{
-    width: 100%;
-    display: block;
-}
 
-.some-wistia-control-bar {
-    display: none !important;
+    width:100%;
+    height:100%;
+
+    display:block;
+
 }
 
     </style>
@@ -1568,15 +1563,13 @@ wistia-player[media-id='2ibxoweynd']:not(:defined) {
       
         <div class="thankyou-video">
 
-      <video
-          controls
-          playsinline
-          preload="metadata"
-          poster="images/video-poster.jpg">
+      <script src="https://fast.wistia.com/player.js" async></script>
+<script src="https://fast.wistia.com/embed/gc1lq9pd13.js" async type="module"></script>
 
-          <source src="images/welcome.mp4" type="video/mp4">
-
-      </video>
+<wistia-player
+    media-id="gc1lq9pd13"
+    aspect="1.7777777777777777">
+</wistia-player>
 
   </div>
         <div class="chart-box" style="margin-top:24px;">
@@ -1617,18 +1610,15 @@ wistia-player[media-id='2ibxoweynd']:not(:defined) {
 
       <div class="thankyou-video">
 
-          <video
-              controls
-              playsinline
-              preload="metadata"
-              poster="images/video-poster.jpg">
-
-              <source src="images/not-qualified.mp4" type="video/mp4">
-
-              Your browser does not support the video tag.
-
-          </video>
-
+          <script src="https://fast.wistia.com/player.js" async></script>
+          <script src="https://fast.wistia.com/embed/3u7a4y0ez9.js" 
+          async type="module"></script><style>wistia-player[media-id='3u7a4y0ez9']:not(:defined) 
+          { 
+            background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/3u7a4y0ez9/swatch'); 
+            display: block; filter: blur(5px); padding-top:56.25%; 
+            }
+            </style> 
+            <wistia-player media-id="3u7a4y0ez9" aspect="1.7777777777777777"></wistia-player>
       </div>
 
   </div>
@@ -1818,11 +1808,19 @@ fetch("https://script.google.com/macros/s/AKfycbyPDg5OwWKhupI3WZ9VfC9FkTdYufIMvN
   }
 
     function goTo(state){
-      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-      document.getElementById('screen-'+state).classList.add('active');
-      window.scrollTo({top:0, behavior:'auto'});
-      initReveal();
-    }
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+
+    document.getElementById('screen-' + state).classList.add('active');
+
+    window.scrollTo({ top:0, behavior:'auto' });
+
+    initReveal();
+
+    // Force layout update after the screen becomes visible
+    requestAnimationFrame(() => {
+        window.dispatchEvent(new Event('resize'));
+    });
+}
 
     const sectionScreenMap = { overview:'optin', system:'optin', curriculum:'vsl', results:'vsl' };
     function scrollToId(id){
@@ -1865,7 +1863,7 @@ bookingDate.min = tomorrow.toISOString().split("T")[0];
 
     });
 
-    await loadBookedSlots(selectedDate);
+    
 
 });
 
@@ -1887,34 +1885,6 @@ bookingDate.min = tomorrow.toISOString().split("T")[0];
 
   });
 
-  async function loadBookedSlots(date){
-
-    const response = await fetch(
-        GOOGLE_SCRIPT_URL + "?date=" + encodeURIComponent(date)
-    );
-
-    const bookedSlots = await response.json();
-
-    document.querySelectorAll(".time-chip").forEach(chip=>{
-
-        chip.classList.remove("booked");
-
-        chip.style.pointerEvents="auto";
-        chip.style.opacity="1";
-
-        if(bookedSlots.includes(chip.textContent.trim())){
-
-            chip.classList.add("booked");
-
-            chip.style.pointerEvents="none";
-
-            chip.style.opacity=".35";
-
-        }
-
-    });
-
-}
 
     document.querySelectorAll('.opt-row').forEach(row=>{
       row.querySelectorAll('.opt-btn').forEach(btn=>{
@@ -2040,7 +2010,7 @@ if (
 
         alert(result.message);
 
-        await loadBookedSlots(selectedDate);
+      
 
         return;
 
